@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b74cnciidhwos"]
+
+[ext_resource type="Texture2D" uid="uid://nm6og27mweov" path="res://assets/sprites/test.png" id="1_a4l7p"]
+[ext_resource type="Script" path="res://scenes/obstacles/block.gd" id="1_eiiv0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q0lpq"]
+size = Vector2(221, 44)
+
+[node name="Block" type="AnimatableBody2D"]
+script = ExtResource("1_eiiv0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q0lpq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(25, -2)
+rotation = 1.5708
+scale = Vector2(1, 2.36)
+texture = ExtResource("1_a4l7p")
