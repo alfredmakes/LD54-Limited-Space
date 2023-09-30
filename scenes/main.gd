@@ -43,20 +43,20 @@ func spawn_block() -> void:
 	
 	var block_instance = block_scene.instantiate() as Block
 	
-	add_child(block_instance)
-	
 	var spawn_location = spawn_locations.slice(
 		0, spawn_locations.size() + 1 - block_instance.block_unit_width).pick_random()
 	
 	block_instance.position = spawn_location + Vector2(0, vertical_spawn_offset)
 	vertical_spawn_offset -= 64
+	
+	add_child(block_instance)
 
 
 func spawn_terrain() -> void:
 	last_terrain_height -= 32
 	var terrain = terrain_scene.instantiate()
-	$Terrains.add_child(terrain)
 	terrain.position.y = last_terrain_height
+	$Terrains.add_child(terrain)
 
 
 func _on_block_spawn_timer_timeout() -> void:
