@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/terrain.tscn" id="5_go5t6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ytum5"]
-size = Vector2(30, 2405)
+size = Vector2(32, 256)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3jkb"]
-size = Vector2(30, 2380)
+size = Vector2(32, 256)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
 size = Vector2(160, 32)
@@ -34,7 +34,7 @@ position_smoothing_speed = 2.0
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GamePosition/LeftWall"]
-position = Vector2(15, -16)
+position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_ytum5")
 
 [node name="RightWall" type="AnimatableBody2D" parent="GamePosition"]
@@ -42,7 +42,7 @@ position = Vector2(192, 0)
 sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GamePosition/RightWall"]
-position = Vector2(17, -14)
+position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_q3jkb")
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
