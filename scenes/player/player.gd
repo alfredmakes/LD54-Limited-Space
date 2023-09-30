@@ -1,12 +1,14 @@
 extends CharacterBody2D
 
 
-const MAX_SPEED := 100.0
-const ACCELERATION := 100.0
+const MAX_SPEED := 200.0
+const ACCELERATION := 700.0
+const DECELERATION := 100.0
 const DRAG_STRENGTH := 1.0
 
 const AIR_CONTROL := 0.5
-const JUMP_VELOCITY := -300.0
+const JUMP_VELOCITY := -400.0
+const WALL_JUMP_VELOCITY := 800.0
 const COYOTE_TIME := 0.1
 
 var _drag_factor := 0.0
@@ -37,11 +39,14 @@ func _physics_process(delta: float) -> void:
 		_air_control_factor = 1
 	else:
 		_air_control_factor = AIR_CONTROL
-	
+		
 	# Add the gravity.
 	if not is_on_floor():
 		if abs(wall_slide_direction) > 0.5:
-			velocity.y += gravity * delta * 0.4
+			var wall_slide_gravity_amount = clamp(remap(velocity.y,
+				-JUMP_VELOCITY, 0.0, 0.1, 1.0), 0.1, 1.0)
+			print(floor(velocity.y), wall_slide_gravity_amount)
+			velocity.y += gravity * delta * wall_slide_gravity_amount
 		else:
 			velocity.y += gravity * delta
 		time_in_air += delta
@@ -50,22 +55,27 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept"):
-		if abs(wall_slide_direction) > 0.5:
-			velocity.y = JUMP_VELOCITY / 2
-			velocity.x = wall_slide_direction * -JUMP_VELOCITY / 2
-			time_in_air = COYOTE_TIME
-		elif time_in_air < COYOTE_TIME:
+		if time_in_air < COYOTE_TIME:
 			velocity.y = JUMP_VELOCITY
+			time_in_air = COYOTE_TIME
+		elif abs(wall_slide_direction) > 0.5:
+			velocity.y = JUMP_VELOCITY
+			velocity.x = wall_slide_direction * WALL_JUMP_VELOCITY / 2
 			time_in_air = COYOTE_TIME
 		
 	
 	# Get the input movement_direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	movement_direction = Input.get_axis("ui_left", "ui_right")
-	if movement_direction:
-		velocity.x = move_toward(velocity.x, movement_direction * MAX_SPEED, ACCELERATION * delta)
+	
+	velocity.x = move_toward(velocity.x, 0,
+		_drag_factor * (velocity.x * velocity.x) * _air_control_factor * delta)
+	
+	if movement_direction != 0.0:
+		velocity.x = move_toward(velocity.x, movement_direction * MAX_SPEED,
+			ACCELERATION * _air_control_factor * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, ACCELERATION * delta)
+		velocity.x = move_toward(velocity.x, 0, ACCELERATION * _air_control_factor * delta)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * _air_control_factor * delta)
 	
 	move_and_slide()
 	
@@ -74,13 +84,12 @@ func _physics_process(delta: float) -> void:
 		return
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
-		print("Collided with: ", collision.get_collider().name)
+#		print("Collided with: ", collision.get_collider().name)
 		if abs(collision.get_normal().x) > 0.5:
 			wall_slide_direction = ceil(collision.get_normal().x)
 		else:
 			wall_slide_direction = 0.0
 		
-		print(wall_slide_direction)
 
 
 func _unhandled_input(event: InputEvent) -> void:
