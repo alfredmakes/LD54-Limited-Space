@@ -1,13 +1,20 @@
 extends CharacterBody2D
 
 
-const SPEED = 100.0
-const JUMP_VELOCITY = -300.0
-const COYOTE_TIME = 0.1
+const MAX_SPEED := 100.0
+const ACCELERATION := 100.0
+const DRAG_STRENGTH := 1.0
 
-var time_in_air = 0.0
+const AIR_CONTROL := 0.5
+const JUMP_VELOCITY := -300.0
+const COYOTE_TIME := 0.1
 
-var wall_slide_direction = 0.0
+var _drag_factor := 0.0
+
+var _air_control_factor := 1.0
+var time_in_air := 0.0
+
+var wall_slide_direction := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -16,11 +23,21 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var movement_direction: float = 0.0
 
+
+func _ready() -> void:
+	_drag_factor = DRAG_STRENGTH * (ACCELERATION / (MAX_SPEED * MAX_SPEED))
+
+
 func _process(delta: float) -> void:
 	process_sprite_fx()
 
 
 func _physics_process(delta: float) -> void:
+	if is_on_floor():
+		_air_control_factor = 1
+	else:
+		_air_control_factor = AIR_CONTROL
+	
 	# Add the gravity.
 	if not is_on_floor():
 		if abs(wall_slide_direction) > 0.5:
@@ -32,19 +49,23 @@ func _physics_process(delta: float) -> void:
 		time_in_air = 0
 	
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and (
-		time_in_air < COYOTE_TIME or abs(wall_slide_direction) > 0.5):
+	if Input.is_action_just_pressed("ui_accept"):
+		if abs(wall_slide_direction) > 0.5:
+			velocity.y = JUMP_VELOCITY / 2
+			velocity.x = wall_slide_direction * -JUMP_VELOCITY / 2
+			time_in_air = COYOTE_TIME
+		elif time_in_air < COYOTE_TIME:
+			velocity.y = JUMP_VELOCITY
+			time_in_air = COYOTE_TIME
 		
-		velocity.y = JUMP_VELOCITY
-		time_in_air = COYOTE_TIME
 	
 	# Get the input movement_direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	movement_direction = Input.get_axis("ui_left", "ui_right")
 	if movement_direction:
-		velocity.x = movement_direction * SPEED
+		velocity.x = move_toward(velocity.x, movement_direction * MAX_SPEED, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, ACCELERATION * delta)
 	
 	move_and_slide()
 	
