@@ -43,10 +43,11 @@ func spawn_block() -> void:
 	
 	var block_instance = block_scene.instantiate() as Block
 	
+	add_child(block_instance)
+	
 	var spawn_location = spawn_locations.slice(
 		0, spawn_locations.size() + 1 - block_instance.block_unit_width).pick_random()
 	
-	add_child(block_instance)
 	block_instance.position = spawn_location + Vector2(0, vertical_spawn_offset)
 	vertical_spawn_offset -= 64
 

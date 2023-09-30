@@ -8,7 +8,8 @@ extends AnimatableBody2D
 
 func _physics_process(delta: float) -> void:
 	var collision: KinematicCollision2D = KinematicCollision2D.new()
-	if test_move(transform, Vector2(0, fall_speed * delta), collision):
+	if test_move(transform, Vector2(0, fall_speed * delta), collision, 0.001):
+		print(self, " ", position, " collided with ", collision.get_collider(), " ", collision.get_collider().position)
 		if collision.get_collider().is_in_group("Player"):
 			
 			var player = collision.get_collider() as CharacterBody2D
