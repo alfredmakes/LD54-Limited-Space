@@ -44,8 +44,8 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		if abs(wall_slide_direction) > 0.5:
 			var wall_slide_gravity_amount = clamp(remap(velocity.y,
-				-JUMP_VELOCITY, 0.0, 0.1, 1.0), 0.1, 1.0)
-			print(floor(velocity.y), wall_slide_gravity_amount)
+				0.0, JUMP_VELOCITY, 0.5, 1.0), 0.5, 1.0)
+			print(floor(velocity.y), " gravity: ", wall_slide_gravity_amount)
 			velocity.y += gravity * delta * wall_slide_gravity_amount
 		else:
 			velocity.y += gravity * delta
