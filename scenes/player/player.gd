@@ -14,6 +14,7 @@ var wall_slide_direction = 0.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var movement_direction: float = 0.0
 
 func _process(delta: float) -> void:
 	process_sprite_fx()
@@ -33,14 +34,15 @@ func _physics_process(delta: float) -> void:
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and (
 		time_in_air < COYOTE_TIME or abs(wall_slide_direction) > 0.5):
+		
 		velocity.y = JUMP_VELOCITY
 		time_in_air = COYOTE_TIME
 	
-	# Get the input direction and handle the movement/deceleration.
+	# Get the input movement_direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
+	movement_direction = Input.get_axis("ui_left", "ui_right")
+	if movement_direction:
+		velocity.x = movement_direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
@@ -67,8 +69,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func process_sprite_fx() -> void:
 	if abs(wall_slide_direction) < 0.5:
-		sprite.frame = 0
-		sprite.flip_h = velocity.x < 0
+		
+		if velocity.x < 0:
+			sprite.frame = 1
+			sprite.flip_h = true
+		elif velocity.x > 0:
+			sprite.frame = 1
+			sprite.flip_h = false
+		elif abs(velocity.y) > 0:
+			sprite.frame = 1
+		else:
+			sprite.frame = 0
 	else:
 		sprite.frame = 2
 		sprite.flip_h = wall_slide_direction > 0
