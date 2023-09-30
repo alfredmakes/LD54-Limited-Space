@@ -9,8 +9,14 @@ var time_in_air = 0.0
 
 var wall_slide_direction = 0.0
 
+@onready var sprite: Sprite2D = $Sprite2D
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+
+func _process(delta: float) -> void:
+	process_sprite_fx()
 
 
 func _physics_process(delta: float) -> void:
@@ -25,7 +31,8 @@ func _physics_process(delta: float) -> void:
 		time_in_air = 0
 	
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and time_in_air < COYOTE_TIME:
+	if Input.is_action_just_pressed("ui_accept") and (
+		time_in_air < COYOTE_TIME or abs(wall_slide_direction) > 0.5):
 		velocity.y = JUMP_VELOCITY
 		time_in_air = COYOTE_TIME
 	
@@ -38,7 +45,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	move_and_slide()
-#
+	
+	if get_slide_collision_count() == 0:
+		wall_slide_direction = 0.0
+		return
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		print("Collided with: ", collision.get_collider().name)
@@ -50,7 +60,15 @@ func _physics_process(delta: float) -> void:
 		print(wall_slide_direction)
 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
+
+
+func process_sprite_fx() -> void:
+	if abs(wall_slide_direction) < 0.5:
+		sprite.frame = 0
+		sprite.flip_h = velocity.x < 0
+	else:
+		sprite.frame = 2
+		sprite.flip_h = wall_slide_direction > 0
