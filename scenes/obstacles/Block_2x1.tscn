@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cew4tjtwll0km"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/block.gd" id="1_w20b7"]
-[ext_resource type="Texture2D" uid="uid://c4kgoqmclx0v8" path="res://assets/sprites/LD54 Spritesheet.png" id="2_16wcq"]
+[ext_resource type="Texture2D" uid="uid://grcdf16g243h" path="res://assets/sprites/LD54 Spritesheet.png" id="2_16wcq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcwvb"]
 size = Vector2(62, 32)
