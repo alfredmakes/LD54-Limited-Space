@@ -1,29 +1,59 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=8 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
 [ext_resource type="PackedScene" uid="uid://b74cnciidhwos" path="res://scenes/obstacles/Block.tscn" id="2_lykuy"]
+[ext_resource type="PackedScene" uid="uid://cew4tjtwll0km" path="res://scenes/obstacles/Block_2x1.tscn" id="4_whokw"]
+[ext_resource type="PackedScene" uid="uid://b2tyx1sikxarg" path="res://scenes/obstacles/Block_1x2.tscn" id="5_d7haw"]
+[ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/terrain.tscn" id="5_go5t6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
-size = Vector2(1180, 20)
+size = Vector2(160, 32)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_i6gor")
-block_scene = ExtResource("2_lykuy")
-spawn_locations = Array[Vector2]([Vector2(0, -64), Vector2(221, -64), Vector2(442, -64), Vector2(663, -64), Vector2(884, 0), Vector2(1105, 0)])
+terrain_scene = ExtResource("5_go5t6")
+block_scenes = Array[PackedScene]([ExtResource("2_lykuy"), ExtResource("4_whokw"), ExtResource("5_d7haw")])
+spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0), Vector2(128, 0), Vector2(160, 0)])
+camera_move_time = 0.5
+
+[node name="GamePosition" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="GamePosition"]
+position = Vector2(112, 112)
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
 autostart = true
 
-[node name="Player" parent="." instance=ExtResource("1_af37u")]
-position = Vector2(544, 425)
-
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(547, 618)
+position = Vector2(112, 208)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_u2yqn")
+
+[node name="Player" parent="." instance=ExtResource("1_af37u")]
+position = Vector2(64, 91)
+
+[node name="Terrains" type="Node" parent="."]
+
+[node name="Terrain" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 192)
+
+[node name="Terrain2" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 160)
+
+[node name="Terrain3" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 128)
+
+[node name="Terrain4" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 96)
+
+[node name="Terrain5" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 64)
+
+[node name="Terrain6" parent="Terrains" instance=ExtResource("5_go5t6")]
+position = Vector2(0, 32)
+
+[node name="Terrain7" parent="Terrains" instance=ExtResource("5_go5t6")]
 
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]

@@ -1,18 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2s17wdt5ht62"]
 
-[ext_resource type="Texture2D" uid="uid://nm6og27mweov" path="res://assets/sprites/test.png" id="1_kl7kj"]
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_tkmpq"]
+[ext_resource type="Texture2D" uid="uid://c4kgoqmclx0v8" path="res://assets/sprites/LD54 Spritesheet.png" id="2_4sts4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nk0v0"]
-radius = 26.0
-height = 88.0
+radius = 3.0
+height = 12.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_tkmpq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
 shape = SubResource("CapsuleShape2D_nk0v0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-2, -12)
-texture = ExtResource("1_kl7kj")
+position = Vector2(0, -8)
+texture = ExtResource("2_4sts4")
+hframes = 3
+vframes = 2
+region_enabled = true
+region_rect = Rect2(0, 96, 48, 32)
