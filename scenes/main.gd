@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 func spawn_block() -> void:
 	var block_scene = block_scenes.pick_random()
 	
-	var block_instance = block_scene.instantiate() as AnimatableBody2D
+	var block_instance = block_scene.instantiate() as Block
 	
 	var spawn_location = spawn_locations.slice(
 		0, spawn_locations.size() + 1 - block_instance.block_unit_width).pick_random()
