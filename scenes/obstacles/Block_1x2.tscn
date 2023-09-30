@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jx508"]
 size = Vector2(30, 64)
 
-[node name="Block1x2" type="RigidBody2D"]
+[node name="Block1x2" type="AnimatableBody2D"]
+sync_to_physics = false
 script = ExtResource("1_nppi2")
 block_unit_width = 1
 

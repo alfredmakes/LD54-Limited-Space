@@ -6,7 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuw1v"]
 size = Vector2(30, 32)
 
-[node name="Block" type="RigidBody2D"]
+[node name="Block" type="AnimatableBody2D"]
+sync_to_physics = false
 script = ExtResource("1_eiiv0")
 block_unit_width = 1
 
