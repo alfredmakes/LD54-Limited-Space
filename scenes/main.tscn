@@ -53,6 +53,7 @@ position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_q3jkb")
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
 [node name="Floor" type="StaticBody2D" parent="."]

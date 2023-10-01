@@ -16,6 +16,8 @@ var vertical_spawn_offset: float = 0.0
 
 @onready var game_position: Node2D = $GamePosition
 
+@onready var player: CharacterBody2D = $Player
+
 var last_terrain_height: float = 0.0
 
 # Should probably pick location and block independently,
@@ -32,10 +34,13 @@ func _process(delta: float) -> void:
 	time_since_camera_move += delta
 	if time_since_camera_move > camera_move_time:
 		time_since_camera_move -= camera_move_time
-		game_position.position.y -= 1
+#		game_position.position.y -= 1
 	
 	if last_terrain_height > game_position.position.y:
 		spawn_terrain()
+	
+#	if player.position.y < game_position.position.y - 50:
+	game_position.position.y = player.position.y - 150
 
 
 func spawn_block() -> void:
@@ -46,8 +51,8 @@ func spawn_block() -> void:
 	var spawn_location = spawn_locations.slice(
 		0, spawn_locations.size() + 1 - block_instance.block_unit_width).pick_random()
 	
-	block_instance.position = spawn_location + Vector2(0, vertical_spawn_offset)
-	vertical_spawn_offset -= 64
+	block_instance.position = spawn_location + game_position.position
+	block_instance.position.y -= 64
 	
 	add_child(block_instance)
 

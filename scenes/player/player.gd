@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 const MAX_SPEED := 200.0
 const ACCELERATION := 700.0
-const DECELERATION := 100.0
+const DECELERATION := 200.0
 const DRAG_STRENGTH := 1.0
 
 const AIR_CONTROL := 0.5
@@ -66,17 +66,24 @@ func _physics_process(delta: float) -> void:
 	
 	# Get the input movement_direction and handle the movement/deceleration.
 	movement_direction = Input.get_axis("ui_left", "ui_right")
+	var change_direction_boost := 1.0
+	if (movement_direction < 0 and velocity.x > 0) or (
+		movement_direction > 0 and velocity.x < 0):
+		change_direction_boost = 2
 	
-	velocity.x = move_toward(velocity.x, 0,
+	var horizontal_velocity = move_toward(velocity.x, 0,
 		_drag_factor * (velocity.x * velocity.x) * _air_control_factor * delta)
 	
 	if movement_direction != 0.0:
-		velocity.x = move_toward(velocity.x, movement_direction * MAX_SPEED,
-			ACCELERATION * _air_control_factor * delta)
+		horizontal_velocity = move_toward(velocity.x, 0,
+			_drag_factor * (velocity.x * velocity.x) * _air_control_factor * delta)
+		horizontal_velocity = move_toward(horizontal_velocity, movement_direction * MAX_SPEED,
+			ACCELERATION * _air_control_factor * change_direction_boost * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, ACCELERATION * _air_control_factor * delta)
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * _air_control_factor * delta)
+#		horizontal_velocity = move_toward(horizontal_velocity, 0, ACCELERATION * _air_control_factor * delta)
+		horizontal_velocity = move_toward(horizontal_velocity, 0, DECELERATION * _air_control_factor * delta)
 	
+	velocity.x = horizontal_velocity
 	move_and_slide()
 	
 	if get_slide_collision_count() == 0:
