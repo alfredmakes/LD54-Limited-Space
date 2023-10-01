@@ -10,6 +10,8 @@ var vertical_spawn_offset: float = 0.0
 
 @export var block_spawn_checker: PackedScene
 
+@export var bat_scene: PackedScene
+
 @onready var block_spawn_timer: Timer = $BlockSpawnTimer
 
 @export var camera_move_time: float = 1.0
@@ -47,7 +49,7 @@ func _process(delta: float) -> void:
 		game_position.position.y = player.position.y - 150
 		if not player.dead and score != floor(abs(game_position.position.y)):
 			score = floor(abs(game_position.position.y))
-			print("Score: ", score)
+#			print("Score: ", score)
 
 
 func spawn_block_spawner() -> void:
@@ -81,9 +83,22 @@ func spawn_terrain() -> void:
 	$Terrains.add_child(terrain)
 
 
+func spawn_bat() -> void:
+	var bat = bat_scene.instantiate() as CharacterBody2D
+	
+	var spawn_location = spawn_locations.slice(
+		0, spawn_locations.size() + 1).pick_random()
+	
+	bat.position = spawn_location + game_position.position
+	
+	add_child(bat)
+
+
 func _on_block_spawn_timer_timeout() -> void:
 	spawn_block_spawner()
 	block_spawn_timer.wait_time = lerpf(3.0, 0.2, score / 5000)
 	print("Block every ", block_spawn_timer.wait_time, "s")
 
 
+func _on_bat_spawn_timer_timeout() -> void:
+	spawn_bat()

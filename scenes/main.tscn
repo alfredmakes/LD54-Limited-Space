@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=21 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scenes/terrain/LevelBounds.gd" id="12_fg7ff"]
 [ext_resource type="Script" path="res://engine/effects/GamePauser.gd" id="14_cqefn"]
 [ext_resource type="PackedScene" uid="uid://y7hlv871xx77" path="res://scenes/obstacles/block_spawn_checker.tscn" id="15_xlngp"]
+[ext_resource type="PackedScene" uid="uid://ci54nly3b832t" path="res://scenes/enemies/bat.tscn" id="16_y1n8x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
 size = Vector2(160, 32)
@@ -34,6 +35,7 @@ terrain_scene = ExtResource("5_go5t6")
 block_scenes = Array[PackedScene]([ExtResource("2_lykuy"), ExtResource("4_whokw"), ExtResource("5_d7haw"), ExtResource("2_lykuy")])
 spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0), Vector2(128, 0), Vector2(160, 0)])
 block_spawn_checker = ExtResource("15_xlngp")
+bat_scene = ExtResource("16_y1n8x")
 camera_move_time = 0.5
 
 [node name="GamePauser" type="Node" parent="."]
@@ -44,6 +46,10 @@ script = ExtResource("14_cqefn")
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
+autostart = true
+
+[node name="BatSpawnTimer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
@@ -191,3 +197,4 @@ position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_q3jkb")
 
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
+[connection signal="timeout" from="BatSpawnTimer" to="." method="_on_bat_spawn_timer_timeout"]

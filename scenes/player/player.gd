@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 
@@ -106,6 +107,8 @@ func _physics_process(delta: float) -> void:
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 #		print("Collided with: ", collision.get_collider().name)
+		if collision.get_collider().is_in_group("Enemy"):
+			print("ouch")
 		if abs(collision.get_normal().x) > 0.5:
 			wall_slide_direction = ceil(collision.get_normal().x)
 		else:
@@ -128,6 +131,7 @@ func process_sprite_fx() -> void:
 		else:
 			if animation_player.is_playing():
 				animation_player.play("RESET")
+			sprite.frame = 0
 		
 		if velocity.x < 0:
 			sprite.flip_h = true
@@ -137,8 +141,18 @@ func process_sprite_fx() -> void:
 	else:
 		if animation_player.is_playing():
 			animation_player.stop()
-		sprite.frame = 4
-		sprite.flip_h = wall_slide_direction < 0
+		if velocity.y != 0:
+			sprite.frame = 4
+			sprite.flip_h = wall_slide_direction < 0
+		else:
+			if animation_player.is_playing():
+				animation_player.play("RESET")
+			sprite.frame = 0
+
+
+func squished_enemy() -> void:
+	velocity.y = JUMP_VELOCITY
+	time_in_air = COYOTE_TIME
 
 
 func die() -> void:
@@ -147,5 +161,6 @@ func die() -> void:
 	gravity = 0
 	dead = true
 #	set_physics_process(false)
-	$CollisionShape2D.disabled = true
+#	$CollisionShape2D.disabled = true
+	set_collision_layer_value(1, false)
 	$AnimationPlayer.play("die")
