@@ -33,6 +33,7 @@ var last_terrain_height: float = 0.0
 
 func _ready() -> void:
 #	GameEvents.block_landed.connect(spawn_block)
+	GameEvents.player_died.connect(on_player_death)
 	pass
 
 
@@ -102,3 +103,8 @@ func _on_block_spawn_timer_timeout() -> void:
 
 func _on_bat_spawn_timer_timeout() -> void:
 	spawn_bat()
+
+
+func on_player_death() -> void:
+	$BGM.stream = load("res://assets/audio/music/Melodic Outro.wav")
+	$BGM.play()
