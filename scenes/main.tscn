@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=16 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -6,6 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://cew4tjtwll0km" path="res://scenes/obstacles/Block_2x1.tscn" id="4_whokw"]
 [ext_resource type="PackedScene" uid="uid://b2tyx1sikxarg" path="res://scenes/obstacles/Block_1x2.tscn" id="5_d7haw"]
 [ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/terrain.tscn" id="5_go5t6"]
+[ext_resource type="Texture2D" uid="uid://dgesriuljf5u0" path="res://assets/Parallax/back5.png" id="7_6qt5b"]
+[ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
+[ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
+[ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
+[ext_resource type="Texture2D" uid="uid://cwabc5t7kwk0l" path="res://assets/Parallax/back1.png" id="11_cmrhx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ytum5"]
 size = Vector2(32, 256)
@@ -122,5 +127,49 @@ position = Vector2(0, 32)
 [node name="Player" parent="." instance=ExtResource("1_af37u")]
 z_index = 1
 position = Vector2(64, 91)
+
+[node name="ParallaxScrolling" type="Node2D" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ParallaxScrolling"]
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxScrolling/ParallaxBackground"]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(0, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxScrolling/ParallaxBackground/ParallaxLayer5"]
+position = Vector2(112, 97)
+texture = ExtResource("7_6qt5b")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxScrolling/ParallaxBackground"]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(0, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxScrolling/ParallaxBackground/ParallaxLayer4"]
+position = Vector2(112, 97)
+texture = ExtResource("8_a144t")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxScrolling/ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxScrolling/ParallaxBackground/ParallaxLayer3"]
+position = Vector2(119, 95)
+texture = ExtResource("9_nje3s")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxScrolling/ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(0, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxScrolling/ParallaxBackground/ParallaxLayer2"]
+position = Vector2(113, 97)
+texture = ExtResource("10_ykarh")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxScrolling/ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(0, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxScrolling/ParallaxBackground/ParallaxLayer"]
+position = Vector2(113, 94)
+texture = ExtResource("11_cmrhx")
 
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
