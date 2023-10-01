@@ -158,7 +158,7 @@ func squished_enemy() -> void:
 func die() -> void:
 	print("yer dead")
 	set_process(false)
-	gravity = 0
+	
 	dead = true
 #	set_physics_process(false)
 #	$CollisionShape2D.disabled = true
