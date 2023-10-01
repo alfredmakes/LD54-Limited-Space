@@ -20,6 +20,7 @@ var vertical_spawn_offset: float = 0.0
 
 @onready var player: CharacterBody2D = $Player
 
+var score: float = 3.0
 
 var last_terrain_height: float = 0.0
 
@@ -42,12 +43,11 @@ func _process(delta: float) -> void:
 	if last_terrain_height > game_position.position.y:
 		spawn_terrain()
 	
-	
-	
 	if game_position.position.y > player.position.y - 150:
 		game_position.position.y = player.position.y - 150
-		if not player.dead:
-			print("Score: ", floor(abs(game_position.position.y)))
+		if not player.dead and score != floor(abs(game_position.position.y)):
+			score = floor(abs(game_position.position.y))
+			print("Score: ", score)
 
 
 func spawn_block_spawner() -> void:
@@ -83,5 +83,7 @@ func spawn_terrain() -> void:
 
 func _on_block_spawn_timer_timeout() -> void:
 	spawn_block_spawner()
+	block_spawn_timer.wait_time = lerpf(3.0, 0.2, score / 5000)
+	print("Block every ", block_spawn_timer.wait_time, "s")
 
 

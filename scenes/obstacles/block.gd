@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 		if collision.get_collider().is_in_group("Player"):
 			
 			var player = collision.get_collider() as CharacterBody2D
-			if player.is_on_floor():
+			if player.is_on_floor() and player.position.y > position.y:
 				GameEvents.player_died.emit()
 		elif collision.get_collider().is_in_group("Block") and not collision.get_collider().fall_speed == 0:
 #			print("Collided, old speed ", fall_speed, " new speed ", collision.get_collider().fall_speed)

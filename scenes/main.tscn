@@ -43,6 +43,7 @@ script = ExtResource("14_cqefn")
 [node name="GamePosition" type="Node2D" parent="."]
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
