@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://y7hlv871xx77"]
+
+[ext_resource type="Script" path="res://scenes/obstacles/block_spawn_checker.gd" id="1_h6fty"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4fqa"]
+size = Vector2(64, 64)
+
+[node name="BlockSpawnChecker" type="Area2D"]
+position = Vector2(-116, -23)
+script = ExtResource("1_h6fty")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, -32)
+shape = SubResource("RectangleShape2D_m4fqa")

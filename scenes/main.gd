@@ -8,6 +8,8 @@ extends Node2D
 @export var spawn_locations: Array[Vector2]
 var vertical_spawn_offset: float = 0.0
 
+@export var block_spawn_checker: PackedScene
+
 @onready var block_spawn_timer: Timer = $BlockSpawnTimer
 
 @export var camera_move_time: float = 1.0
@@ -17,6 +19,7 @@ var vertical_spawn_offset: float = 0.0
 @onready var game_position: Node2D = $GamePosition
 
 @onready var player: CharacterBody2D = $Player
+
 
 var last_terrain_height: float = 0.0
 
@@ -47,7 +50,19 @@ func _process(delta: float) -> void:
 			print("Score: ", floor(abs(game_position.position.y)))
 
 
-func spawn_block() -> void:
+func spawn_block_spawner() -> void:
+	
+	var block_spawn_checker_instance = block_spawn_checker.instantiate() as BlockSpawnChecker
+	
+	var block := get_block()
+	
+	block_spawn_checker_instance.position = block.position
+	block_spawn_checker_instance.set_block(block, block.position)
+	
+	add_child(block_spawn_checker_instance)
+
+
+func get_block() -> Block:
 	var block_scene = block_scenes.pick_random()
 	
 	var block_instance = block_scene.instantiate() as Block
@@ -56,10 +71,8 @@ func spawn_block() -> void:
 		0, spawn_locations.size() + 1 - block_instance.block_unit_width).pick_random()
 	
 	block_instance.position = spawn_location + game_position.position
-	block_instance.position.y -= 64
 	
-	add_child(block_instance)
-
+	return block_instance
 
 func spawn_terrain() -> void:
 	last_terrain_height -= 32
@@ -69,4 +82,6 @@ func spawn_terrain() -> void:
 
 
 func _on_block_spawn_timer_timeout() -> void:
-	spawn_block()
+	spawn_block_spawner()
+
+
