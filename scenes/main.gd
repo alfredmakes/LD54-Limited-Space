@@ -39,8 +39,9 @@ func _process(delta: float) -> void:
 	if last_terrain_height > game_position.position.y:
 		spawn_terrain()
 	
-#	if player.position.y < game_position.position.y - 50:
-	game_position.position.y = player.position.y - 150
+	if game_position.position.y > player.position.y - 150:
+		game_position.position.y = player.position.y - 150
+		print("Score: ", floor(abs(game_position.position.y)))
 
 
 func spawn_block() -> void:

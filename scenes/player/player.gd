@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		if abs(wall_slide_direction) > 0.5:
 			var wall_slide_gravity_amount = clamp(remap(velocity.y,
 				0.0, JUMP_VELOCITY, 0.5, 1.0), 0.5, 1.0)
-			print(floor(velocity.y), " gravity: ", wall_slide_gravity_amount)
+#			print(floor(velocity.y), " gravity: ", wall_slide_gravity_amount)
 			velocity.y += gravity * delta * wall_slide_gravity_amount
 		else:
 			velocity.y += gravity * delta
@@ -84,6 +84,10 @@ func _physics_process(delta: float) -> void:
 		horizontal_velocity = move_toward(horizontal_velocity, 0, DECELERATION * _air_control_factor * delta)
 	
 	velocity.x = horizontal_velocity
+	if abs(wall_slide_direction) > 0:
+		velocity.y = clampf(velocity.y, -1000, 150)
+	else:
+		velocity.y = clampf(velocity.y, -1000, 300)
 	move_and_slide()
 	
 	if get_slide_collision_count() == 0:

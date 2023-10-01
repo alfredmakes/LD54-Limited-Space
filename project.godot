@@ -27,6 +27,11 @@ window/size/window_width_override=576
 window/size/window_height_override=576
 window/stretch/mode="viewport"
 
+[physics]
+
+common/physics_ticks_per_second=144
+common/physics_jitter_fix=1.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
