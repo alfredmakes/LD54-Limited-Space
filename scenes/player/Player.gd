@@ -135,6 +135,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().quit()
 	if Input.is_action_pressed("ui_restart"):
 		get_tree().reload_current_scene()
+		Engine.time_scale = 1
 
 
 func process_sprite_fx() -> void:
