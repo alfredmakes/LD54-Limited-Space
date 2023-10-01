@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 var player: CharacterBody2D
 
-const MAX_SPEED = 50.0
-const ACCELERATION = 50.0
+const MAX_SPEED = 65.0
+const ACCELERATION = 200.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var direction = position.direction_to(player.position)
 	
-	velocity = direction * MAX_SPEED
+	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION)
 	move_and_slide()
 	
 	for i in get_slide_collision_count():

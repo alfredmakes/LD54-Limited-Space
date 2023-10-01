@@ -97,7 +97,7 @@ func spawn_bat() -> void:
 func _on_block_spawn_timer_timeout() -> void:
 	spawn_block_spawner()
 	block_spawn_timer.wait_time = lerpf(3.0, 0.2, score / 5000)
-	print("Block every ", block_spawn_timer.wait_time, "s")
+#	print("Block every ", block_spawn_timer.wait_time, "s")
 
 
 func _on_bat_spawn_timer_timeout() -> void:
