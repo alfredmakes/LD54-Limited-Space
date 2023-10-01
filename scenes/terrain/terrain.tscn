@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dccy8muv5iico"]
 
-[ext_resource type="Texture2D" uid="uid://c4kgoqmclx0v8" path="res://assets/sprites/LD54 Spritesheet.png" id="1_crr5f"]
+[ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="1_crr5f"]
 
 [node name="Terrain" type="Node2D"]
 
@@ -8,10 +8,10 @@
 position = Vector2(16, -16)
 texture = ExtResource("1_crr5f")
 region_enabled = true
-region_rect = Rect2(0, 32, 32, 32)
+region_rect = Rect2(64, 32, 32, 32)
 
 [node name="RightSprite" type="Sprite2D" parent="."]
 position = Vector2(208, -16)
 texture = ExtResource("1_crr5f")
 region_enabled = true
-region_rect = Rect2(64, 32, 32, 32)
+region_rect = Rect2(0, 32, 32, 32)

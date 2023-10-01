@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b74cnciidhwos" path="res://scenes/obstacles/Block.tscn" id="2_lykuy"]
 [ext_resource type="PackedScene" uid="uid://cew4tjtwll0km" path="res://scenes/obstacles/Block_2x1.tscn" id="4_whokw"]
 [ext_resource type="PackedScene" uid="uid://b2tyx1sikxarg" path="res://scenes/obstacles/Block_1x2.tscn" id="5_d7haw"]
-[ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/terrain.tscn" id="5_go5t6"]
+[ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/Terrain.tscn" id="5_go5t6"]
 [ext_resource type="Texture2D" uid="uid://dgesriuljf5u0" path="res://assets/Parallax/back5.png" id="7_6qt5b"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
@@ -72,7 +72,7 @@ region_rect = Rect2(32, 0, 32, 32)
 position = Vector2(-96, 0)
 texture = SubResource("CompressedTexture2D_12l6u")
 region_enabled = true
-region_rect = Rect2(32, 0, 32, 32)
+region_rect = Rect2(32, 32, 32, 32)
 
 [node name="Sprite2D2" type="Sprite2D" parent="Floor"]
 position = Vector2(-32, 0)
@@ -101,7 +101,7 @@ region_rect = Rect2(32, 0, 32, 32)
 position = Vector2(96, 0)
 texture = SubResource("CompressedTexture2D_12l6u")
 region_enabled = true
-region_rect = Rect2(32, 0, 32, 32)
+region_rect = Rect2(32, 32, 32, 32)
 
 [node name="Terrains" type="Node" parent="."]
 
