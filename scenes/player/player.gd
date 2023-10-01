@@ -21,6 +21,8 @@ var time_in_air := 0.0
 var wall_slide_direction := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -118,20 +120,25 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func process_sprite_fx() -> void:
 	if abs(wall_slide_direction) < 0.5:
+		if abs(velocity.y) > 0:
+			sprite.frame = 1
+		elif abs(velocity.x) > 0:
+			if animation_player.current_animation != "run":
+				animation_player.play("run")
+		else:
+			if animation_player.is_playing():
+				animation_player.play("RESET")
 		
 		if velocity.x < 0:
-			sprite.frame = 1
 			sprite.flip_h = true
 		elif velocity.x > 0:
-			sprite.frame = 1
 			sprite.flip_h = false
-		elif abs(velocity.y) > 0:
-			sprite.frame = 1
-		else:
-			sprite.frame = 0
+	
 	else:
-		sprite.frame = 2
-		sprite.flip_h = wall_slide_direction > 0
+		if animation_player.is_playing():
+			animation_player.stop()
+		sprite.frame = 4
+		sprite.flip_h = wall_slide_direction < 0
 
 
 func die() -> void:
