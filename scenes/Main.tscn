@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=23 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/Terrain.tscn" id="5_go5t6"]
 [ext_resource type="Script" path="res://engine/camera/FollowCamera.gd" id="7_1f1w3"]
 [ext_resource type="Texture2D" uid="uid://b28m4lcri53c1" path="res://assets/Parallax/back5.png" id="7_6qt5b"]
+[ext_resource type="AudioStream" uid="uid://ddqyrev6m56kj" path="res://assets/audio/music/Heavy MIX (looped).wav" id="8_6wypn"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
 [ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
@@ -38,6 +39,11 @@ spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0)
 block_spawn_checker = ExtResource("15_xlngp")
 bat_scene = ExtResource("16_y1n8x")
 camera_move_time = 0.5
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_6wypn")
+volume_db = -20.0
+autoplay = true
 
 [node name="GamePauser" type="Node" parent="."]
 process_mode = 3

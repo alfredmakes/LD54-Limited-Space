@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ddqyrev6m56kj"
+path="res://.godot/imported/Heavy MIX (looped).wav-5a59f40ebfe49fbefc0bf67ffa0dba51.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/Heavy MIX (looped).wav"
+dest_files=["res://.godot/imported/Heavy MIX (looped).wav-5a59f40ebfe49fbefc0bf67ffa0dba51.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
