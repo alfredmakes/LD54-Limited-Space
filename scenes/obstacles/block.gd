@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 			if player.is_on_floor():
 				GameEvents.player_died.emit()
 		elif collision.get_collider().is_in_group("Block") and not collision.get_collider().fall_speed == 0:
-			print("Collided, old speed ", fall_speed, " new speed ", collision.get_collider().fall_speed)
+#			print("Collided, old speed ", fall_speed, " new speed ", collision.get_collider().fall_speed)
 			fall_speed = collision.get_collider().fall_speed
 		else:
 			stop()

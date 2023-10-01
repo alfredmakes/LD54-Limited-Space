@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=19 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
 [ext_resource type="Texture2D" uid="uid://cwabc5t7kwk0l" path="res://assets/Parallax/back1.png" id="11_cmrhx"]
 [ext_resource type="Script" path="res://scenes/terrain/LevelBounds.gd" id="12_fg7ff"]
+[ext_resource type="Script" path="res://engine/effects/GamePauser.gd" id="14_cqefn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
 size = Vector2(160, 32)
@@ -32,6 +33,10 @@ terrain_scene = ExtResource("5_go5t6")
 block_scenes = Array[PackedScene]([ExtResource("2_lykuy"), ExtResource("4_whokw"), ExtResource("5_d7haw"), ExtResource("2_lykuy")])
 spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0), Vector2(128, 0), Vector2(160, 0)])
 camera_move_time = 0.5
+
+[node name="GamePauser" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("14_cqefn")
 
 [node name="GamePosition" type="Node2D" parent="."]
 

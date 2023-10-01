@@ -142,3 +142,4 @@ func die() -> void:
 #	set_physics_process(false)
 	$CollisionShape2D.disabled = true
 	$AnimationPlayer.play("die")
+	
