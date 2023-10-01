@@ -11,6 +11,8 @@ const JUMP_VELOCITY := -400.0
 const WALL_JUMP_VELOCITY := 800.0
 const COYOTE_TIME := 0.1
 
+var dead = false
+
 var _drag_factor := 0.0
 
 var _air_control_factor := 1.0
@@ -91,6 +93,9 @@ func _physics_process(delta: float) -> void:
 		velocity.y = clampf(velocity.y, -1000, 150)
 	else:
 		velocity.y = clampf(velocity.y, -1000, 300)
+	
+	if dead:
+		velocity.x = 0
 	move_and_slide()
 	
 	if get_slide_collision_count() == 0:
@@ -132,6 +137,8 @@ func process_sprite_fx() -> void:
 func die() -> void:
 	print("yer dead")
 	set_process(false)
-	set_physics_process(false)
+	gravity = 0
+	dead = true
+#	set_physics_process(false)
 	$CollisionShape2D.disabled = true
 	$AnimationPlayer.play("die")
