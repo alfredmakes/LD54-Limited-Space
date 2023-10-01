@@ -19,7 +19,9 @@ var _drag_factor := 0.0
 var _air_control_factor := 1.0
 var time_in_air := 0.0
 
+var time_since_wall_slide := 0.0
 var wall_slide_direction := 0.0
+var last_wall_slide_direction := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -47,7 +49,7 @@ func _physics_process(delta: float) -> void:
 		_air_control_factor = 1
 	else:
 		_air_control_factor = AIR_CONTROL
-		
+	
 	# Add the gravity.
 	if not is_on_floor():
 		if abs(wall_slide_direction) > 0.5:
@@ -55,25 +57,29 @@ func _physics_process(delta: float) -> void:
 				0.0, JUMP_VELOCITY, 0.5, 1.0), 0.5, 1.0)
 #			print(floor(velocity.y), " gravity: ", wall_slide_gravity_amount)
 			velocity.y += gravity * delta * wall_slide_gravity_amount
+			
+			time_since_wall_slide = 0.0
 		else:
 			velocity.y += gravity * delta
+			time_since_wall_slide += delta
 		time_in_air += delta
 	else:
 		time_in_air = 0
 	
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("jump"):
+		print("time in air: ", time_in_air, " time since wall slide: ", time_since_wall_slide)
 		if time_in_air < COYOTE_TIME:
 			velocity.y = JUMP_VELOCITY
 			time_in_air = COYOTE_TIME
-		elif abs(wall_slide_direction) > 0.5:
+		elif time_since_wall_slide < COYOTE_TIME:
 			velocity.y = JUMP_VELOCITY
-			velocity.x = wall_slide_direction * WALL_JUMP_VELOCITY / 2
+			velocity.x = last_wall_slide_direction * WALL_JUMP_VELOCITY / 2
 			time_in_air = COYOTE_TIME
-		
+		print("Last wall slid dir: ", last_wall_slide_direction, "Velocityx: ", velocity.x)
 	
 	# Get the input movement_direction and handle the movement/deceleration.
-	movement_direction = Input.get_axis("ui_left", "ui_right")
+	movement_direction = Input.get_axis("move_left", "move_right")
 	var change_direction_boost := 1.0
 	if (movement_direction < 0 and velocity.x > 0) or (
 		movement_direction > 0 and velocity.x < 0):
@@ -102,6 +108,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if get_slide_collision_count() == 0:
+#		last_wall_slide_direction = wall_slide_direction
 		wall_slide_direction = 0.0
 		return
 	for i in get_slide_collision_count():
@@ -111,6 +118,7 @@ func _physics_process(delta: float) -> void:
 			print("ouch")
 		if abs(collision.get_normal().x) > 0.5:
 			wall_slide_direction = ceil(collision.get_normal().x)
+			last_wall_slide_direction = wall_slide_direction
 		else:
 			wall_slide_direction = 0.0
 		
@@ -119,6 +127,8 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
+	if Input.is_action_pressed("ui_restart"):
+		get_tree().reload_current_scene()
 
 
 func process_sprite_fx() -> void:
