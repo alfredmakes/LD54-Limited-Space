@@ -74,7 +74,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
-		print("time in air: ", time_in_air, " time since wall slide: ", time_since_wall_slide)
+#		print("time in air: ", time_in_air, " time since wall slide: ", time_since_wall_slide)
 		if time_in_air < COYOTE_TIME:
 			velocity.y = JUMP_VELOCITY
 			time_in_air = COYOTE_TIME
@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 			velocity.x = last_wall_slide_direction * WALL_JUMP_VELOCITY / 2
 			time_in_air = COYOTE_TIME
-		print("Last wall slid dir: ", last_wall_slide_direction, "Velocityx: ", velocity.x)
+#		print("Last wall slid dir: ", last_wall_slide_direction, "Velocityx: ", velocity.x)
 	
 	# Get the input movement_direction and handle the movement/deceleration.
 	movement_direction = Input.get_axis("move_left", "move_right")
