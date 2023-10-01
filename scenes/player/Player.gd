@@ -45,6 +45,12 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if abs(velocity.x) < 0.001 and time_since_wall_slide < COYOTE_TIME:
+		var collision := KinematicCollision2D.new()
+		test_move(transform, Vector2(last_wall_slide_direction, 0), collision)
+		if collision.get_collider():
+			velocity.x += last_wall_slide_direction
+	
 	if is_on_floor():
 		_air_control_factor = 1
 	else:

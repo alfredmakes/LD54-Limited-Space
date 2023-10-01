@@ -196,8 +196,5 @@ sync_to_physics = false
 position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_q3jkb")
 
-[node name="Bat" parent="." instance=ExtResource("16_y1n8x")]
-position = Vector2(111, 124)
-
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
 [connection signal="timeout" from="BatSpawnTimer" to="." method="_on_bat_spawn_timer_timeout"]

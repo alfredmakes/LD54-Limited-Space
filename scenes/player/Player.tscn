@@ -112,6 +112,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+safe_margin = 1.0
 script = ExtResource("1_tkmpq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
