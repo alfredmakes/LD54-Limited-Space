@@ -28,6 +28,9 @@ var movement_direction: float = 0.0
 
 func _ready() -> void:
 	_drag_factor = DRAG_STRENGTH * (ACCELERATION / (MAX_SPEED * MAX_SPEED))
+	
+#	player_idle_state.started_movement_input.connect(fsm.change_state.bind(player_move_state))
+	GameEvents.player_died.connect(die)
 
 
 func _process(delta: float) -> void:
@@ -124,3 +127,11 @@ func process_sprite_fx() -> void:
 	else:
 		sprite.frame = 2
 		sprite.flip_h = wall_slide_direction > 0
+
+
+func die() -> void:
+	print("yer dead")
+	set_process(false)
+	set_physics_process(false)
+	$CollisionShape2D.disabled = true
+	$AnimationPlayer.play("die")
