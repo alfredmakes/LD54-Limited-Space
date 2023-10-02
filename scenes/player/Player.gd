@@ -179,7 +179,7 @@ func process_sprite_fx() -> void:
 
 
 func jump() -> void:
-	velocity.y = JUMP_VELOCITY
+	velocity.y = JUMP_VELOCITY - current_jump_chain * 10
 	time_in_air = COYOTE_TIME
 	current_jump_chain += 1
 	time_since_last_jump = 0.0
