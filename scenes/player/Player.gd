@@ -52,6 +52,8 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	print("Jump Chain: ", current_jump_chain, " / ", INVULN_JUMP_CHAIN_LENGTH)
+	print("Jump timer: ", time_since_last_jump, " / ", JUMP_CHAIN_RESET_TIME)
 	if abs(velocity.x) < 0.001 and time_since_wall_slide < COYOTE_TIME:
 		var collision := KinematicCollision2D.new()
 		test_move(transform, Vector2(last_wall_slide_direction, 0), collision)

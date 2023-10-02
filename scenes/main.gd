@@ -109,10 +109,12 @@ func _on_bat_spawn_timer_timeout() -> void:
 
 
 func on_player_death() -> void:
+	$BGM.stop()
+	await(get_tree().create_timer(0.1).timeout)
 	$BGM.stream = load("res://assets/audio/music/Melodic Outro.wav")
 	$BGM.play()
 
 
 func on_score_changed(_score: int, _delta: int) -> void:
 	score += _delta
-	print("Score: ", _score, " Delta: ", _delta)
+#	print("Score: ", _score, " Delta: ", _delta)

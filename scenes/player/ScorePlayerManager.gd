@@ -15,8 +15,8 @@ func _ready() -> void:
 
 
 func play_score_sfx(score: int, delta: int) -> void:
-	var bus_pitch_shift = AudioServer.get_bus_effect(1, 1) as AudioEffectPitchShift
-	var bus_low_pass_filter = AudioServer.get_bus_effect(1, 2) as AudioEffectLowPassFilter
+	var bus_pitch_shift = AudioServer.get_bus_effect(3, 1) as AudioEffectPitchShift
+	var bus_low_pass_filter = AudioServer.get_bus_effect(3, 2) as AudioEffectLowPassFilter
 #	bus_pitch_shift.pitch_scale = lerpf(0.9, 1.1, score / 50.0)
 	bus_low_pass_filter.cutoff_hz = clampf(lerpf(600, 1000, score / 50.0), 600, 1000)
 	

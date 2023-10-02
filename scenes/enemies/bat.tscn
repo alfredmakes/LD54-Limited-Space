@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ci54nly3b832t"]
+[gd_scene load_steps=9 format=3 uid="uid://ci54nly3b832t"]
 
 [ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="1_3xc6s"]
 [ext_resource type="Script" path="res://scenes/enemies/bat.gd" id="1_cturr"]
+[ext_resource type="AudioStream" uid="uid://doo80qa0u7k7u" path="res://assets/audio/sfx/Foley Human Mouth Blop.wav" id="3_ds0l5"]
 
 [sub_resource type="Animation" id="Animation_g84s2"]
 length = 0.001
@@ -72,6 +73,18 @@ tracks/5/path = NodePath("CollisionShape2D:disabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -170,6 +183,18 @@ tracks/6/keys = {
 "method": &"set_physics_process"
 }]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_istsq"]
 resource_name = "fly"
@@ -221,3 +246,6 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_hvtu2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ds0l5")
