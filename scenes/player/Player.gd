@@ -54,19 +54,21 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	print("Jump Chain: ", current_jump_chain, " / ", INVULN_JUMP_CHAIN_LENGTH)
 	print("Jump timer: ", time_since_last_jump, " / ", JUMP_CHAIN_RESET_TIME)
+	time_since_last_jump += delta
+	if time_since_last_jump > JUMP_CHAIN_RESET_TIME:
+		current_jump_chain = 0
+	
+	
 	if abs(velocity.x) < 0.001 and time_since_wall_slide < COYOTE_TIME:
 		var collision := KinematicCollision2D.new()
 		test_move(transform, Vector2(last_wall_slide_direction, 0), collision)
 		if collision.get_collider():
 			velocity.x += last_wall_slide_direction
 	
-	if is_on_floor():
-		_air_control_factor = 1
-	else:
-		_air_control_factor = AIR_CONTROL
-	
 	# Add the gravity.
 	if not is_on_floor():
+		_air_control_factor = AIR_CONTROL
+		
 		if abs(wall_slide_direction) > 0.5:
 			var wall_slide_gravity_amount = clamp(remap(velocity.y,
 				0.0, JUMP_VELOCITY, 0.5, 1.0), 0.5, 1.0)
@@ -79,18 +81,18 @@ func _physics_process(delta: float) -> void:
 			time_since_wall_slide += delta
 		time_in_air += delta
 	else:
+		_air_control_factor = 1
 		time_in_air = 0
 	
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
 #		print("time in air: ", time_in_air, " time since wall slide: ", time_since_wall_slide)
 		if time_in_air < COYOTE_TIME:
-			velocity.y = JUMP_VELOCITY
-			time_in_air = COYOTE_TIME
+			jump()
 		elif time_since_wall_slide < COYOTE_TIME:
-			velocity.y = JUMP_VELOCITY
-			velocity.x = last_wall_slide_direction * WALL_JUMP_VELOCITY / 2
-			time_in_air = COYOTE_TIME
+			jump()
+			velocity.x = last_wall_slide_direction * WALL_JUMP_VELOCITY / 2 
+			velocity.x += last_wall_slide_direction * current_jump_chain * 50
 #		print("Last wall slid dir: ", last_wall_slide_direction, "Velocityx: ", velocity.x)
 	
 	# Get the input movement_direction and handle the movement/deceleration.
@@ -176,9 +178,15 @@ func process_sprite_fx() -> void:
 			sprite.frame = 0
 
 
-func squished_enemy() -> void:
+func jump() -> void:
 	velocity.y = JUMP_VELOCITY
 	time_in_air = COYOTE_TIME
+	current_jump_chain += 1
+	time_since_last_jump = 0.0
+
+
+func squished_enemy() -> void:
+	jump()
 
 
 func die() -> void:

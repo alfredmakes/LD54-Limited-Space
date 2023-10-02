@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dccy8muv5iico"]
 
-[ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="1_crr5f"]
+[ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="1_crr5f"]
 
 [node name="Terrain" type="Node2D"]
 
