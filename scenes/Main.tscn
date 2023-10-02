@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=25 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -11,6 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://ddqyrev6m56kj" path="res://assets/audio/music/Heavy MIX (looped).wav" id="8_6wypn"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
+[ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="10_0381w"]
+[ext_resource type="Script" path="res://engine/scoring/HeightTrackerBar.gd" id="10_ujgsv"]
 [ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
 [ext_resource type="Texture2D" uid="uid://cocetpwg48dhm" path="res://assets/Parallax/back6.png" id="11_8bdk0"]
 [ext_resource type="Texture2D" uid="uid://cwabc5t7kwk0l" path="res://assets/Parallax/back1.png" id="11_cmrhx"]
@@ -43,13 +45,24 @@ camera_move_time = 0.5
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_6wypn")
 volume_db = -20.0
-autoplay = true
 
 [node name="GamePauser" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("14_cqefn")
 
 [node name="GamePosition" type="Node2D" parent="."]
+
+[node name="HeightTrackerBar" type="Node2D" parent="."]
+script = ExtResource("10_ujgsv")
+
+[node name="Sprite2D" type="Sprite2D" parent="HeightTrackerBar"]
+modulate = Color(1, 0.901961, 0.0627451, 0.509804)
+z_index = -1
+position = Vector2(112, 0)
+scale = Vector2(6, 6)
+texture = ExtResource("10_0381w")
+region_enabled = true
+region_rect = Rect2(206, 9, 36, 1)
 
 [node name="BlockSpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -130,7 +143,7 @@ position = Vector2(0, 32)
 
 [node name="Player" parent="." instance=ExtResource("1_af37u")]
 z_index = 1
-position = Vector2(113, 187)
+position = Vector2(113, 192)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(112, 112)

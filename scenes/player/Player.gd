@@ -12,6 +12,9 @@ const JUMP_VELOCITY := -400.0
 const WALL_JUMP_VELOCITY := 800.0
 const COYOTE_TIME := 0.1
 
+const INVULN_JUMP_CHAIN_LENGTH: int = 3
+const JUMP_CHAIN_RESET_TIME := 0.7
+
 var dead = false
 
 var _drag_factor := 0.0
@@ -22,6 +25,10 @@ var time_in_air := 0.0
 var time_since_wall_slide := 0.0
 var wall_slide_direction := 0.0
 var last_wall_slide_direction := 0.0
+
+var current_jump_chain: int = 0
+var time_since_last_jump: float = 0.0
+
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer

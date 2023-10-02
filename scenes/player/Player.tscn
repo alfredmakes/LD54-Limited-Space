@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2s17wdt5ht62"]
+[gd_scene load_steps=10 format=3 uid="uid://b2s17wdt5ht62"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_tkmpq"]
 [ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="2_4sts4"]
+[ext_resource type="Script" path="res://scenes/player/ScorePlayerManager.gd" id="3_04hs6"]
+[ext_resource type="AudioStream" uid="uid://bmrlc2ngwwro8" path="res://assets/audio/sfx/MECHClik_PS4_Friction_Stick.wav" id="4_lh6ly"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nk0v0"]
 radius = 3.0
@@ -131,3 +133,11 @@ shape = SubResource("CapsuleShape2D_nk0v0")
 libraries = {
 "": SubResource("AnimationLibrary_1uc83")
 }
+
+[node name="ScorePlayerManager" type="Node2D" parent="."]
+script = ExtResource("3_04hs6")
+
+[node name="ScorePlayer" type="AudioStreamPlayer2D" parent="ScorePlayerManager"]
+stream = ExtResource("4_lh6ly")
+volume_db = 12.0
+bus = &"ScoreSounds"

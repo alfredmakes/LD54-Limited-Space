@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://doo80qa0u7k7u"
+path="res://.godot/imported/Foley Human Mouth Blop.wav-15f2cd5f6cac9ccaba0aa26246663ec4.sample"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Foley Human Mouth Blop.wav"
+dest_files=["res://.godot/imported/Foley Human Mouth Blop.wav-15f2cd5f6cac9ccaba0aa26246663ec4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
