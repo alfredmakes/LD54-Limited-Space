@@ -33,6 +33,8 @@ var time_since_last_jump: float = 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var jump_sound: AudioStreamPlayer2D = $JumpSound
+
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -82,6 +84,8 @@ func _physics_process(delta: float) -> void:
 		time_in_air += delta
 	else:
 		_air_control_factor = 1
+		if time_in_air != 0:
+			$PlayerLanded.play()
 		time_in_air = 0
 	
 	# Handle Jump.
@@ -135,8 +139,10 @@ func _physics_process(delta: float) -> void:
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 #		print("Collided with: ", collision.get_collider().name)
-		if collision.get_collider().is_in_group("Enemy"):
-			print("ouch")
+		if collision.get_collider().is_in_group("Block"):
+			if collision.get_normal().y > 0.5 and current_jump_chain >= SMASH_JUMP_CHAIN_LENGTH:
+				collision.get_collider().smash()
+				smashed_block()
 		if abs(collision.get_normal().x) > 0.5:
 			wall_slide_direction = ceil(collision.get_normal().x)
 			last_wall_slide_direction = wall_slide_direction
@@ -193,11 +199,18 @@ func jump() -> void:
 	current_jump_chain += 1
 	GameEvents.multiplier_changed.emit(current_jump_chain)
 	time_since_last_jump = 0.0
+	jump_sound.play()
 
 
 func squished_enemy() -> void:
 	GameEvents.enemy_squished.emit()
 	jump()
+
+
+func smashed_block() -> void:
+	GameEvents.block_smashed.emit()
+	current_jump_chain = INVULN_JUMP_CHAIN_LENGTH
+	GameEvents.multiplier_changed.emit(current_jump_chain)
 
 
 func die() -> void:

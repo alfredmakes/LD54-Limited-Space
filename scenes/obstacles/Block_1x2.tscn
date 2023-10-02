@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2tyx1sikxarg"]
+[gd_scene load_steps=9 format=3 uid="uid://b2tyx1sikxarg"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/block.gd" id="1_nppi2"]
 [ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="2_i164x"]
 [ext_resource type="AudioStream" uid="uid://br7u7ctuv4cpv" path="res://assets/audio/sfx/impactWood_heavy_000.ogg" id="3_77tw1"]
+[ext_resource type="AnimationLibrary" uid="uid://t8quy5u6gpre" path="res://scenes/obstacles/block_animation_library.res" id="4_m660g"]
+[ext_resource type="AudioStream" uid="uid://blw3qftmwl46w" path="res://assets/audio/sfx/impactMining_002.ogg" id="5_wocx5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jx508"]
 size = Vector2(30, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqb27"]
+size = Vector2(20, 2)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_esndr"]
 
 [node name="Block1x2" type="AnimatableBody2D" groups=["Block"]]
 sync_to_physics = false
@@ -18,6 +25,13 @@ texture = ExtResource("2_i164x")
 region_enabled = true
 region_rect = Rect2(160, 0, 32, 64)
 
+[node name="SmashedSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(16, -32)
+texture = ExtResource("2_i164x")
+region_enabled = true
+region_rect = Rect2(160, 64, 32, 64)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(16, -32)
 shape = SubResource("RectangleShape2D_jx508")
@@ -26,4 +40,21 @@ shape = SubResource("RectangleShape2D_jx508")
 stream = ExtResource("3_77tw1")
 max_distance = 300.0
 attenuation = 2.0
+bus = &"Sound Effects"
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(16, -76)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_qqb27")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"block": SubResource("AnimationLibrary_esndr"),
+"block_animation_library": ExtResource("4_m660g")
+}
+
+[node name="SmashedAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_wocx5")
 bus = &"Sound Effects"

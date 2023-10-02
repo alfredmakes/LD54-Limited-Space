@@ -45,6 +45,7 @@ func _ready() -> void:
 	GameEvents.player_died.connect(on_player_death)
 	GameEvents.enemy_squished.connect(func (): change_score(10))
 	GameEvents.multiplier_changed.connect(on_multiplier_changed)
+	GameEvents.block_smashed.connect(func (): change_score(20))
 
 
 func _process(delta: float) -> void:
@@ -133,4 +134,3 @@ func change_score(delta: int) -> void:
 
 func on_multiplier_changed(_multiplier: int) -> void:
 	multiplier = _multiplier
-

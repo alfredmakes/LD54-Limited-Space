@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2s17wdt5ht62"]
+[gd_scene load_steps=16 format=3 uid="uid://b2s17wdt5ht62"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_tkmpq"]
 [ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="2_4sts4"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bmrlc2ngwwro8" path="res://assets/audio/sfx/MECHClik_PS4_Friction_Stick.wav" id="4_lh6ly"]
 [ext_resource type="AudioStream" uid="uid://dwqj45bd48mkh" path="res://assets/audio/sfx/punchednoises-46732-edited-02.mp3" id="5_ejmha"]
 [ext_resource type="AudioStream" uid="uid://cew3dwmoeixdu" path="res://assets/audio/sfx/impactSoft_medium_001.ogg" id="6_jbyd5"]
+[ext_resource type="AudioStream" uid="uid://qvvkjwj1xuug" path="res://assets/audio/sfx/heuugh.mp3" id="7_7s5fp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nk0v0"]
 radius = 3.0
@@ -217,3 +218,7 @@ libraries = {
 
 [node name="PlayerLanded" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_jbyd5")
+pitch_scale = 2.0
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_7s5fp")

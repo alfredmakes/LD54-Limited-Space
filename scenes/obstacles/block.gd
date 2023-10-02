@@ -1,12 +1,16 @@
 class_name Block
 extends AnimatableBody2D
 
-@export var fall_speed: float = 50
+@onready var block_check_area: Area2D = $Area2D
+
+@export var starting_fall_speed: float = 50
 @export var block_unit_width: int
+
+var fall_speed: float
 
 
 func _ready() -> void:
-	fall_speed += randf_range(-10.0, 10.0)
+	fall_speed = starting_fall_speed + randf_range(-10.0, 10.0)
 
 
 func _physics_process(delta: float) -> void:
@@ -27,9 +31,30 @@ func _physics_process(delta: float) -> void:
 	position += Vector2(0, fall_speed * delta)
 
 
+func start() -> void:
+	fall_speed = starting_fall_speed + randf_range(-10.0, 10.0)
+	set_physics_process(true)
+	alert_blocks_above()
+
+
 func stop() -> void:
 	position.x = ceil(position.x)
 	position.y = ceil(position.y)
-	fall_speed = 0
+	fall_speed = 0.0
 	$AudioStreamPlayer2D.play()
 	set_physics_process(false)
+
+
+func alert_blocks_above() -> void:
+	if not block_check_area.has_overlapping_bodies(): return
+	
+	for body in block_check_area.get_overlapping_bodies():
+		if body.is_in_group("Block"):
+			body.start()
+	
+	print(block_check_area.get_overlapping_bodies())
+
+
+func smash() -> void:
+	alert_blocks_above()
+	$AnimationPlayer.play("block_animation_library/smash")
