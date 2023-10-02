@@ -199,6 +199,8 @@ func jump() -> void:
 	current_jump_chain += 1
 	GameEvents.multiplier_changed.emit(current_jump_chain)
 	time_since_last_jump = 0.0
+	jump_sound.pitch_scale = clampf(lerpf(0.9, 1.1,
+		float(current_jump_chain) / float(SMASH_JUMP_CHAIN_LENGTH)), 0.9, 1.1)
 	jump_sound.play()
 
 
