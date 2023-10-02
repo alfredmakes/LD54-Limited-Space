@@ -86,6 +86,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
+		if dead:
+			return
 #		print("time in air: ", time_in_air, " time since wall slide: ", time_since_wall_slide)
 		if time_in_air < COYOTE_TIME:
 			jump()
@@ -97,6 +99,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Get the input movement_direction and handle the movement/deceleration.
 	movement_direction = Input.get_axis("move_left", "move_right")
+	if dead:
+		movement_direction = 0.0
 	var change_direction_boost := 1.0
 	if (movement_direction < 0 and velocity.x > 0) or (
 		movement_direction > 0 and velocity.x < 0):
