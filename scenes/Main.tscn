@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://ddqyrev6m56kj" path="res://assets/audio/music/Heavy MIX (looped).wav" id="8_6wypn"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
-[ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="10_0381w"]
+[ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="10_0381w"]
 [ext_resource type="Script" path="res://engine/scoring/HeightTrackerBar.gd" id="10_ujgsv"]
 [ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
 [ext_resource type="Texture2D" uid="uid://cocetpwg48dhm" path="res://assets/Parallax/back6.png" id="11_8bdk0"]
@@ -44,7 +44,8 @@ camera_move_time = 0.5
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_6wypn")
-volume_db = -20.0
+volume_db = -25.0
+autoplay = true
 
 [node name="GamePauser" type="Node" parent="."]
 process_mode = 3

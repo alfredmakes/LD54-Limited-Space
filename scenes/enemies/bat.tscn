@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ci54nly3b832t"]
 
-[ext_resource type="Texture2D" uid="uid://bnlkbr6nv0c3i" path="res://assets/sprites/LD54 Spritesheet.png" id="1_3xc6s"]
+[ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="1_3xc6s"]
 [ext_resource type="Script" path="res://scenes/enemies/bat.gd" id="1_cturr"]
 
 [sub_resource type="Animation" id="Animation_g84s2"]
