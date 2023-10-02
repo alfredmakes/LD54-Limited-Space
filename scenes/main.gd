@@ -23,6 +23,7 @@ var vertical_spawn_offset: float = 0.0
 @onready var player: CharacterBody2D = $Player
 
 var score: float = 0.0
+var multiplier: int = 0
 
 var height_scored: float = 0.0
 
@@ -36,8 +37,8 @@ var last_terrain_height: float = 0.0
 func _ready() -> void:
 #	GameEvents.block_landed.connect(spawn_block)
 	GameEvents.player_died.connect(on_player_death)
-	GameEvents.score_changed.connect(on_score_changed)
-	pass
+	GameEvents.enemy_squished.connect(func (): change_score(10))
+	GameEvents.multiplier_changed.connect(on_multiplier_changed)
 
 
 func _process(delta: float) -> void:
@@ -52,7 +53,7 @@ func _process(delta: float) -> void:
 	if game_position.position.y > player.position.y - 150:
 		game_position.position.y = player.position.y - 150
 		if (not player.dead) and height_scored <= floor(abs(game_position.position.y) - 10):
-			GameEvents.score_changed.emit(score, 1)
+			change_score(1)
 			height_scored = floor(abs(game_position.position.y))
 
 
@@ -115,6 +116,11 @@ func on_player_death() -> void:
 	$BGM.play()
 
 
-func on_score_changed(_score: int, _delta: int) -> void:
-	score += _delta
+func change_score(delta: int) -> void:
+	score += delta * max(1, multiplier)
+	GameEvents.score_changed.emit(score, delta * max(1, multiplier))
 #	print("Score: ", _score, " Delta: ", _delta)
+
+
+func on_multiplier_changed(_multiplier: int) -> void:
+	multiplier = _multiplier

@@ -14,7 +14,6 @@ func _ready() -> void:
 func on_score_changed(score: int, delta: int) -> void:
 	var score_display = score_display_scene.instantiate() as ScoreDisplay
 	score_display.position = player.position# + Vector2.DOWN * 8
-	score_display.scale = Vector2(0.5, 0.5)
 	get_parent().add_child(score_display)
 	score_display.set_score("+" + str(delta))
 	

@@ -192,6 +192,7 @@ func jump() -> void:
 
 
 func squished_enemy() -> void:
+	GameEvents.enemy_squished.emit()
 	jump()
 
 
