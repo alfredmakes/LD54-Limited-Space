@@ -31,4 +31,5 @@ func stop() -> void:
 	position.x = ceil(position.x)
 	position.y = ceil(position.y)
 	fall_speed = 0
+	$AudioStreamPlayer2D.play()
 	set_physics_process(false)

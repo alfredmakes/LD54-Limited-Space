@@ -1,5 +1,8 @@
+class_name Main
 extends Node2D
 # Spawns blocks and enemies etc
+
+@export var maximum_difficulty_height: float = 0.0
 
 @export var terrain_scene: PackedScene
 
@@ -13,6 +16,8 @@ var vertical_spawn_offset: float = 0.0
 @export var bat_scene: PackedScene
 
 @onready var block_spawn_timer: Timer = $BlockSpawnTimer
+@onready var bat_spawn_timer: Timer = $BatSpawnTimer
+
 
 @export var camera_move_time: float = 1.0
 
@@ -26,6 +31,7 @@ var score: float = 0.0
 var multiplier: int = 0
 
 var height_scored: float = 0.0
+var height_scored_percent: float = 0.0
 
 var last_terrain_height: float = 0.0
 
@@ -54,7 +60,9 @@ func _process(delta: float) -> void:
 		game_position.position.y = player.position.y - 150
 		if (not player.dead) and height_scored <= floor(abs(game_position.position.y) - 10):
 			change_score(1)
-			height_scored = floor(abs(game_position.position.y))
+			height_scored += 10
+			height_scored_percent = height_scored / maximum_difficulty_height
+#			height_scored = floor(abs(game_position.position.y))
 
 
 func spawn_block_spawner() -> void:
@@ -101,12 +109,12 @@ func spawn_bat() -> void:
 
 func _on_block_spawn_timer_timeout() -> void:
 	spawn_block_spawner()
-	block_spawn_timer.wait_time = lerpf(3.0, 0.2, score / 5000)
-#	print("Block every ", block_spawn_timer.wait_time, "s")
+	block_spawn_timer.wait_time = clampf(lerpf(3.0, 0.2, height_scored_percent), 0.2, 3.0)
 
 
 func _on_bat_spawn_timer_timeout() -> void:
 	spawn_bat()
+	bat_spawn_timer.wait_time = clampf(lerpf(15.0, 5.0, height_scored_percent), 5.0, 15.0)
 
 
 func on_player_death() -> void:

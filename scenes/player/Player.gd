@@ -150,7 +150,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func process_sprite_fx() -> void:
-	if current_jump_chain > INVULN_JUMP_CHAIN_LENGTH:
+	if current_jump_chain >= INVULN_JUMP_CHAIN_LENGTH:
 		$SpecialEffects.play("invuln")
 	else:
 		$SpecialEffects.play("RESET")

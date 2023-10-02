@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2tyx1sikxarg"]
+[gd_scene load_steps=5 format=3 uid="uid://b2tyx1sikxarg"]
 
 [ext_resource type="Script" path="res://scenes/obstacles/block.gd" id="1_nppi2"]
 [ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="2_i164x"]
+[ext_resource type="AudioStream" uid="uid://br7u7ctuv4cpv" path="res://assets/audio/sfx/impactWood_heavy_000.ogg" id="3_77tw1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jx508"]
 size = Vector2(30, 64)
@@ -20,3 +21,9 @@ region_rect = Rect2(160, 0, 32, 64)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(16, -32)
 shape = SubResource("RectangleShape2D_jx508")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_77tw1")
+max_distance = 300.0
+attenuation = 2.0
+bus = &"Sound Effects"

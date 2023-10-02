@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=32 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://kbhljdppk13n" path="res://engine/scoring/score_display.tscn" id="24_2ryko"]
 [ext_resource type="Script" path="res://engine/scoring/MainScoreDisplay.gd" id="25_3ryrb"]
 [ext_resource type="Script" path="res://engine/scoring/ScoreMultiplierDisplay.gd" id="26_cgl4l"]
+[ext_resource type="Script" path="res://engine/scoring/HeightBar.gd" id="27_x82om"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
 size = Vector2(160, 32)
@@ -41,6 +42,7 @@ size = Vector2(32, 256)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_i6gor")
+maximum_difficulty_height = 1000.0
 terrain_scene = ExtResource("5_go5t6")
 block_scenes = Array[PackedScene]([ExtResource("2_lykuy"), ExtResource("4_whokw"), ExtResource("5_d7haw"), ExtResource("2_lykuy")])
 spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0), Vector2(128, 0), Vector2(160, 0)])
@@ -53,7 +55,6 @@ camera_move_time = 0.5
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_6wypn")
 volume_db = -25.0
-autoplay = true
 
 [node name="GamePauser" type="Node" parent="."]
 process_mode = 3
@@ -78,7 +79,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="BatSpawnTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 15.0
 autostart = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
@@ -242,7 +243,7 @@ position = Vector2(112, 112)
 script = ExtResource("22_2vrba")
 
 [node name="MainScoreDisplay" type="Node2D" parent="ScreenFollower"]
-position = Vector2(-73, 93)
+position = Vector2(-73, 92)
 script = ExtResource("25_3ryrb")
 
 [node name="ScoreDisplay" parent="ScreenFollower/MainScoreDisplay" instance=ExtResource("24_2ryko")]
@@ -252,6 +253,26 @@ script = ExtResource("26_cgl4l")
 
 [node name="ScoreDisplay" parent="ScreenFollower/ScoreMultiplierDisplay" instance=ExtResource("24_2ryko")]
 position = Vector2(48, 92)
+
+[node name="HeightBar" type="Node2D" parent="ScreenFollower"]
+position = Vector2(-103, 16)
+script = ExtResource("27_x82om")
+
+[node name="BarSprite" type="Sprite2D" parent="ScreenFollower/HeightBar"]
+z_index = 2
+position = Vector2(7, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("10_0381w")
+region_enabled = true
+region_rect = Rect2(96, 0, 16, 64)
+
+[node name="ProgressSprite" type="Sprite2D" parent="ScreenFollower/HeightBar"]
+z_index = 2
+position = Vector2(13, 56)
+scale = Vector2(2, 2)
+texture = ExtResource("10_0381w")
+region_enabled = true
+region_rect = Rect2(112, 48, 16, 16)
 
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
 [connection signal="timeout" from="BatSpawnTimer" to="." method="_on_bat_spawn_timer_timeout"]

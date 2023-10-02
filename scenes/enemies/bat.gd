@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		var collision = get_slide_collision(i)
 		if collision.get_collider().is_in_group("Player"):
 			if player.position.y > position.y + 6 and (
-				not player.current_jump_chain > player.INVULN_JUMP_CHAIN_LENGTH
+				not player.current_jump_chain >= player.INVULN_JUMP_CHAIN_LENGTH
 			):
 				GameEvents.player_died.emit()
 			else:
