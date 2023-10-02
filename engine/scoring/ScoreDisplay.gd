@@ -4,6 +4,7 @@ extends Node2D
 @export var number_sprites: Array[NumberSprite]
 
 
+# What if score is lower than before? Need to delete sprites
 func set_score(score: String) -> void:
 	var i: int = 0
 	for char in score:

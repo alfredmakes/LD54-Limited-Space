@@ -111,6 +111,7 @@ func _on_bat_spawn_timer_timeout() -> void:
 
 func on_player_death() -> void:
 	$BGM.stop()
+	GameEvents.sleep(0.1)
 	await(get_tree().create_timer(0.1).timeout)
 	$BGM.stream = load("res://assets/audio/music/Melodic Outro.wav")
 	$BGM.play()
@@ -124,3 +125,4 @@ func change_score(delta: int) -> void:
 
 func on_multiplier_changed(_multiplier: int) -> void:
 	multiplier = _multiplier
+

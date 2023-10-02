@@ -5,3 +5,7 @@ signal player_died
 signal enemy_squished
 signal score_changed(score: int, delta: int)
 signal multiplier_changed(multiplier: int)
+
+
+func sleep(sec: float):
+	OS.delay_msec(int(sec * 1000))
