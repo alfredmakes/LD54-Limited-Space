@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-var player: CharacterBody2D
+var player: Player
 
 const MAX_SPEED = 65.0
 const ACCELERATION = 200.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player = get_tree().get_first_node_in_group("Player") as CharacterBody2D
+	player = get_tree().get_first_node_in_group("Player") as Player
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,7 +28,9 @@ func _physics_process(delta: float) -> void:
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider().is_in_group("Player"):
-			if player.position.y > position.y + 6:
+			if player.position.y > position.y + 6 and (
+				not player.current_jump_chain > player.INVULN_JUMP_CHAIN_LENGTH
+			):
 				GameEvents.player_died.emit()
 			else:
 				player.squished_enemy()

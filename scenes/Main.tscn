@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ctvnjs3rdwk4e"]
+[gd_scene load_steps=31 format=3 uid="uid://ctvnjs3rdwk4e"]
 
 [ext_resource type="PackedScene" uid="uid://b2s17wdt5ht62" path="res://scenes/player/Player.tscn" id="1_af37u"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_i6gor"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dccy8muv5iico" path="res://scenes/terrain/Terrain.tscn" id="5_go5t6"]
 [ext_resource type="Script" path="res://engine/camera/FollowCamera.gd" id="7_1f1w3"]
 [ext_resource type="Texture2D" uid="uid://b28m4lcri53c1" path="res://assets/Parallax/back5.png" id="7_6qt5b"]
+[ext_resource type="PackedScene" uid="uid://cqle5gg2qkber" path="res://engine/ui/UI.tscn" id="8_1vvlk"]
 [ext_resource type="AudioStream" uid="uid://ddqyrev6m56kj" path="res://assets/audio/music/Heavy MIX (looped).wav" id="8_6wypn"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
@@ -18,8 +19,13 @@
 [ext_resource type="Texture2D" uid="uid://cwabc5t7kwk0l" path="res://assets/Parallax/back1.png" id="11_cmrhx"]
 [ext_resource type="Script" path="res://scenes/terrain/LevelBounds.gd" id="12_fg7ff"]
 [ext_resource type="Script" path="res://engine/effects/GamePauser.gd" id="14_cqefn"]
+[ext_resource type="Script" path="res://engine/scoring/FloatingScoreNumberManager.gd" id="14_s0kqd"]
 [ext_resource type="PackedScene" uid="uid://y7hlv871xx77" path="res://scenes/obstacles/block_spawn_checker.tscn" id="15_xlngp"]
 [ext_resource type="PackedScene" uid="uid://ci54nly3b832t" path="res://scenes/enemies/bat.tscn" id="16_y1n8x"]
+[ext_resource type="Script" path="res://engine/camera/ScreenFollower.gd" id="22_2vrba"]
+[ext_resource type="PackedScene" uid="uid://kbhljdppk13n" path="res://engine/scoring/score_display.tscn" id="24_2ryko"]
+[ext_resource type="Script" path="res://engine/scoring/MainScoreDisplay.gd" id="25_3ryrb"]
+[ext_resource type="Script" path="res://engine/scoring/ScoreMultiplierDisplay.gd" id="26_cgl4l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u2yqn"]
 size = Vector2(160, 32)
@@ -41,6 +47,8 @@ spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0)
 block_spawn_checker = ExtResource("15_xlngp")
 bat_scene = ExtResource("16_y1n8x")
 camera_move_time = 0.5
+
+[node name="UI" parent="." instance=ExtResource("8_1vvlk")]
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_6wypn")
@@ -146,6 +154,11 @@ position = Vector2(0, 32)
 z_index = 1
 position = Vector2(113, 192)
 
+[node name="FloatingScoreNumberManager" type="Node2D" parent="."]
+position = Vector2(113, 192)
+script = ExtResource("14_s0kqd")
+score_display_scene = ExtResource("24_2ryko")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(112, 112)
 limit_left = 0
@@ -223,6 +236,22 @@ sync_to_physics = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelBounds/RightWall"]
 position = Vector2(16, 96)
 shape = SubResource("RectangleShape2D_q3jkb")
+
+[node name="ScreenFollower" type="Node2D" parent="."]
+position = Vector2(112, 112)
+script = ExtResource("22_2vrba")
+
+[node name="MainScoreDisplay" type="Node2D" parent="ScreenFollower"]
+position = Vector2(-73, 93)
+script = ExtResource("25_3ryrb")
+
+[node name="ScoreDisplay" parent="ScreenFollower/MainScoreDisplay" instance=ExtResource("24_2ryko")]
+
+[node name="ScoreMultiplierDisplay" type="Node2D" parent="ScreenFollower"]
+script = ExtResource("26_cgl4l")
+
+[node name="ScoreDisplay" parent="ScreenFollower/ScoreMultiplierDisplay" instance=ExtResource("24_2ryko")]
+position = Vector2(48, 92)
 
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
 [connection signal="timeout" from="BatSpawnTimer" to="." method="_on_bat_spawn_timer_timeout"]

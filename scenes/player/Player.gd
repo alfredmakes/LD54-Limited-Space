@@ -13,6 +13,7 @@ const WALL_JUMP_VELOCITY := 800.0
 const COYOTE_TIME := 0.1
 
 const INVULN_JUMP_CHAIN_LENGTH: int = 3
+const SMASH_JUMP_CHAIN_LENGTH: int = 5
 const JUMP_CHAIN_RESET_TIME := 0.7
 
 var dead = false
@@ -52,11 +53,10 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	print("Jump Chain: ", current_jump_chain, " / ", INVULN_JUMP_CHAIN_LENGTH)
-	print("Jump timer: ", time_since_last_jump, " / ", JUMP_CHAIN_RESET_TIME)
 	time_since_last_jump += delta
-	if time_since_last_jump > JUMP_CHAIN_RESET_TIME:
+	if time_since_last_jump > JUMP_CHAIN_RESET_TIME and current_jump_chain != 0:
 		current_jump_chain = 0
+		GameEvents.multiplier_changed.emit(current_jump_chain)
 	
 	
 	if abs(velocity.x) < 0.001 and time_since_wall_slide < COYOTE_TIME:
@@ -92,7 +92,7 @@ func _physics_process(delta: float) -> void:
 		elif time_since_wall_slide < COYOTE_TIME:
 			jump()
 			velocity.x = last_wall_slide_direction * WALL_JUMP_VELOCITY / 2 
-			velocity.x += last_wall_slide_direction * current_jump_chain * 50
+			velocity.x += last_wall_slide_direction * current_jump_chain * 10
 #		print("Last wall slid dir: ", last_wall_slide_direction, "Velocityx: ", velocity.x)
 	
 	# Get the input movement_direction and handle the movement/deceleration.
@@ -120,8 +120,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = clampf(velocity.y, -1000, 300)
 	
-	if dead:
-		velocity.x = 0
+#	if dead:
+#		velocity.x = 0
 	move_and_slide()
 	
 	if get_slide_collision_count() == 0:
@@ -150,6 +150,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func process_sprite_fx() -> void:
+	if current_jump_chain > INVULN_JUMP_CHAIN_LENGTH:
+		$SpecialEffects.play("invuln")
+	else:
+		$SpecialEffects.play("RESET")
+	
 	if abs(wall_slide_direction) < 0.5:
 		if abs(velocity.y) > 0:
 			sprite.frame = 1
@@ -182,6 +187,7 @@ func jump() -> void:
 	velocity.y = JUMP_VELOCITY - current_jump_chain * 10
 	time_in_air = COYOTE_TIME
 	current_jump_chain += 1
+	GameEvents.multiplier_changed.emit(current_jump_chain)
 	time_since_last_jump = 0.0
 
 
@@ -192,7 +198,7 @@ func squished_enemy() -> void:
 func die() -> void:
 	print("yer dead")
 	set_process(false)
-	
+	$SpecialEffects.stop()
 	dead = true
 #	set_physics_process(false)
 #	$CollisionShape2D.disabled = true

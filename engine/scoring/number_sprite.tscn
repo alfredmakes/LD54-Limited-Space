@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b124g2hakkq22"]
+
+[ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="1_lxnfd"]
+[ext_resource type="Script" path="res://engine/scoring/number_sprite.gd" id="2_q1d5k"]
+
+[node name="NumberSprite" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = 2
+texture = ExtResource("1_lxnfd")
+hframes = 6
+vframes = 2
+region_enabled = true
+region_rect = Rect2(0, 128, 96, 32)
+script = ExtResource("2_q1d5k")

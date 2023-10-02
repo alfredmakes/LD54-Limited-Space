@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://kbhljdppk13n"]
+
+[ext_resource type="Script" path="res://engine/scoring/ScoreDisplay.gd" id="1_p3qud"]
+[ext_resource type="PackedScene" uid="uid://b124g2hakkq22" path="res://engine/scoring/number_sprite.tscn" id="2_wq1p6"]
+
+[node name="ScoreDisplay" type="Node2D" node_paths=PackedStringArray("number_sprites")]
+script = ExtResource("1_p3qud")
+number_sprites = [NodePath("NumberSprite")]
+
+[node name="NumberSprite" parent="." instance=ExtResource("2_wq1p6")]
