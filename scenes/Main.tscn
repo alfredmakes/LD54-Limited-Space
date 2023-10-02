@@ -42,7 +42,7 @@ size = Vector2(32, 256)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_i6gor")
-maximum_difficulty_height = 1000.0
+maximum_difficulty_height = 2000.0
 terrain_scene = ExtResource("5_go5t6")
 block_scenes = Array[PackedScene]([ExtResource("2_lykuy"), ExtResource("4_whokw"), ExtResource("5_d7haw"), ExtResource("2_lykuy")])
 spawn_locations = Array[Vector2]([Vector2(32, 0), Vector2(64, 0), Vector2(96, 0), Vector2(128, 0), Vector2(160, 0)])
