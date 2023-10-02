@@ -16,6 +16,14 @@ func on_score_changed(score: int, delta: int) -> void:
 	score_display.position = player.position# + Vector2.DOWN * 8
 	get_parent().add_child(score_display)
 	score_display.set_score("+" + str(delta))
+	if delta >= 100:
+		score_display.modulate = Color.RED
+	elif delta >= 10:
+		score_display.modulate = Color.YELLOW
+	else:
+		score_display.modulate = Color.WHITE
+	
+	await(get_tree().create_timer(1).timeout)
 	
 	var scale_tweener := create_tween()
 	scale_tweener.tween_property(score_display, "scale", Vector2(0,0), 0.5)

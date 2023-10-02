@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://engine/scoring/number_sprite.gd" id="2_q1d5k"]
 
 [node name="NumberSprite" type="Sprite2D"]
-modulate = Color(1, 1, 1, 0.498039)
+modulate = Color(1, 1, 1, 0.509804)
 z_index = 2
 texture = ExtResource("1_lxnfd")
 hframes = 6

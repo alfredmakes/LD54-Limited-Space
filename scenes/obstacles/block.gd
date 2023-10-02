@@ -57,4 +57,8 @@ func alert_blocks_above() -> void:
 
 func smash() -> void:
 	alert_blocks_above()
+	$CollisionShape2D.disabled = true
 	$AnimationPlayer.play("block_animation_library/smash")
+
+func smash_sleep() -> void:
+	GameEvents.sleep(0.2)

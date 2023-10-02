@@ -9,3 +9,9 @@ func _ready() -> void:
 
 func on_multiplier_changed(multiplier: int) -> void:
 	score_display.set_score("x" + str(multiplier))
+	if multiplier >= 5:
+		score_display.modulate = Color.RED
+	elif multiplier >= 3:
+		score_display.modulate = Color.YELLOW
+	else:
+		score_display.modulate = Color.WHITE

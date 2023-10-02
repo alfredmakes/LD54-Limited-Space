@@ -45,7 +45,7 @@ func _ready() -> void:
 	GameEvents.player_died.connect(on_player_death)
 	GameEvents.enemy_squished.connect(func (): change_score(10))
 	GameEvents.multiplier_changed.connect(on_multiplier_changed)
-	GameEvents.block_smashed.connect(func (): change_score(20))
+	GameEvents.block_smashed.connect(func (): change_score(10))
 
 
 func _process(delta: float) -> void:
@@ -115,15 +115,16 @@ func _on_block_spawn_timer_timeout() -> void:
 
 func _on_bat_spawn_timer_timeout() -> void:
 	spawn_bat()
-	bat_spawn_timer.wait_time = clampf(lerpf(15.0, 5.0, height_scored_percent), 5.0, 15.0)
+	bat_spawn_timer.wait_time = clampf(lerpf(15.0, 1.0, height_scored_percent/2.0), 1.0, 15.0)
 
 
 func on_player_death() -> void:
 	$BGM.stop()
 	GameEvents.sleep(0.1)
-	await(get_tree().create_timer(0.1).timeout)
 	$BGM.stream = load("res://assets/audio/music/Melodic Outro.wav")
 	$BGM.play()
+	$ScreenFollower/MainScoreDisplay/ScoreDisplay.set_white()
+
 
 
 func change_score(delta: int) -> void:
@@ -134,3 +135,11 @@ func change_score(delta: int) -> void:
 
 func on_multiplier_changed(_multiplier: int) -> void:
 	multiplier = _multiplier
+
+
+func _on_bgm_finished() -> void:
+	if player.dead:
+		return
+	
+	$BGM.stream = load("res://assets/audio/music/mezhdunami-flashes-95436.mp3")
+	$BGM.play()

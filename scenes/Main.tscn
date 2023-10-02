@@ -9,9 +9,9 @@
 [ext_resource type="Script" path="res://engine/camera/FollowCamera.gd" id="7_1f1w3"]
 [ext_resource type="Texture2D" uid="uid://b28m4lcri53c1" path="res://assets/Parallax/back5.png" id="7_6qt5b"]
 [ext_resource type="PackedScene" uid="uid://cqle5gg2qkber" path="res://engine/ui/UI.tscn" id="8_1vvlk"]
-[ext_resource type="AudioStream" uid="uid://ddqyrev6m56kj" path="res://assets/audio/music/Heavy MIX (looped).wav" id="8_6wypn"]
 [ext_resource type="Texture2D" uid="uid://cb22n1fv2lrb1" path="res://assets/Parallax/back4.png" id="8_a144t"]
 [ext_resource type="Texture2D" uid="uid://c6mj0lcrqk4nv" path="res://assets/Parallax/back3.png" id="9_nje3s"]
+[ext_resource type="AudioStream" uid="uid://l282fwhsr1pu" path="res://assets/audio/music/game-music-loop-9-145494.mp3" id="9_umkw4"]
 [ext_resource type="Texture2D" uid="uid://dft6e1m7215ed" path="res://assets/sprites/LD54 Spritesheet.png" id="10_0381w"]
 [ext_resource type="Script" path="res://engine/scoring/HeightTrackerBar.gd" id="10_ujgsv"]
 [ext_resource type="Texture2D" uid="uid://daes8n6f4dxj6" path="res://assets/Parallax/back2.png" id="10_ykarh"]
@@ -53,8 +53,10 @@ camera_move_time = 0.5
 [node name="UI" parent="." instance=ExtResource("8_1vvlk")]
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_6wypn")
+stream = ExtResource("9_umkw4")
 volume_db = -25.0
+autoplay = true
+bus = &"Music"
 
 [node name="GamePauser" type="Node" parent="."]
 process_mode = 3
@@ -274,5 +276,6 @@ texture = ExtResource("10_0381w")
 region_enabled = true
 region_rect = Rect2(112, 48, 16, 16)
 
+[connection signal="finished" from="BGM" to="." method="_on_bgm_finished"]
 [connection signal="timeout" from="BlockSpawnTimer" to="." method="_on_block_spawn_timer_timeout"]
 [connection signal="timeout" from="BatSpawnTimer" to="." method="_on_bat_spawn_timer_timeout"]

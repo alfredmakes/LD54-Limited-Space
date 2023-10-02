@@ -21,12 +21,11 @@ var tween: Tween
 #func _ready() -> void:
 #	GameEvents.score_changed.connect(on_score_changed)
 
-
 func set_number_sprite_frame(number: String) -> void:
 	frame = NumberSpriteFrames[number]
 	tween = create_tween()
 	tween.tween_property(self, "modulate", Color(modulate, 1.0), 0.02)
-	tween.tween_property(self, "modulate", Color(modulate, 0.5), 0.04)
+	tween.tween_property(self, "modulate", Color(modulate, 0.7), 0.04)
 
 
 #func on_score_changed(score: int, delta: int) -> void:

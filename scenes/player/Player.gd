@@ -34,6 +34,7 @@ var time_since_last_jump: float = 0.0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var jump_sound: AudioStreamPlayer2D = $JumpSound
+@export var dust_animated_sprite_scene: PackedScene
 
 
 
@@ -202,6 +203,13 @@ func jump() -> void:
 	jump_sound.pitch_scale = clampf(lerpf(0.9, 1.1,
 		float(current_jump_chain) / float(SMASH_JUMP_CHAIN_LENGTH)), 0.9, 1.1)
 	jump_sound.play()
+	
+	var fx = dust_animated_sprite_scene.instantiate() as AnimatedSprite2D
+	fx.flip_h = not sprite.flip_h
+	if abs(wall_slide_direction) > 0.5:
+		fx.rotation_degrees = wall_slide_direction * 90
+	fx.position = position# - velocity.normalized()
+	get_parent().add_child(fx)
 
 
 func squished_enemy() -> void:

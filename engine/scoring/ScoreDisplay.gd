@@ -4,14 +4,19 @@ extends Node2D
 @export var number_sprites: Array[NumberSprite]
 
 
+func set_white() -> void:
+	for sprite in number_sprites:
+		create_tween().tween_property(sprite, "modulate", Color.WHITE, 1.0)
+
+
 # What if score is lower than before? Need to delete sprites
 func set_score(score: String) -> void:
 	var i: int = 0
-	for char in score:
+	for c in score:
 		if number_sprites.size() < i + 1:
 			number_sprites.append(instance_new_number_sprite())
 		
-		number_sprites[i].set_number_sprite_frame(char)
+		number_sprites[i].set_number_sprite_frame(c)
 		i += 1
 
 
